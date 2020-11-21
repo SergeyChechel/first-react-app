@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import AppHeader from '../app-header/';
 import SearchPanel from '../search-panel/';
@@ -16,28 +16,42 @@ const AppBlock = styled.div`
 `;
 
 const StyledAppBlock = styled(AppBlock)`
-    background-color: grey;
+    background-color: '';
 `;
 
-const App = () => {
+export default class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [
+                {label: 'Going to learn React', important: true, id: 'gsdfg'},
+                {label: 'That is so good', important: false, id: 'sdtg'},
+                {label: 'I need a break...', important: false, id: 'ewwe'}
+            ]
+        };
+        this.deleteItem = this.deleteItem.bind(this);
+    }
 
-    const data = [
-        {label: 'Going to learn React', important: true, id: 'gsdfg'},
-        {label: 'That is so good', important: false, id: 'sdtg'},
-        {label: 'I need a break...', important: false, id: 'ewwe'}
-    ];
+    deleteItem(id) {
+        this.setState(({data}) => {
+            const index = data.findIndex(elem => elem.id === id)
+        });
+    }
 
-    return (
-        <StyledAppBlock>
-            <AppHeader />
-            <div className="search-panel d-flex">
-                <SearchPanel />
-                <PostStatusFilter />
-            </div>
-            <PostList posts={data}/>
-            <PostAddForm/>
-        </StyledAppBlock>
-    )
+    render() {
+        return (
+            <StyledAppBlock>
+                <AppHeader />
+                <div className="search-panel d-flex">
+                    <SearchPanel />
+                    <PostStatusFilter />
+                </div>
+                <PostList 
+                posts={this.state.data}
+                onDelete={this.deleteItem}/>
+                <PostAddForm/>
+            </StyledAppBlock>
+        )
+    }
 };
 
-export default App;
