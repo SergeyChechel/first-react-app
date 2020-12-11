@@ -20,11 +20,11 @@ export default class PostStatusFilter extends Component {
                     key={name} 
                     type="button" 
                     className={`btn ${clazz}`}
-                    onClick={() => onFilterSelect(name)}>
-                    {label}
-                </button>
+                    onClick={() => onFilterSelect(name)}
+                >{label}</button>
             );
         });
+
         return (
             <div className="btn-group">
                 {buttons}

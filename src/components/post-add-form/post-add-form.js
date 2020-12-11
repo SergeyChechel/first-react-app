@@ -30,7 +30,8 @@ export default class PostAddForm extends Component {
         return (
             <form 
                 className="bottom-panel d-flex"
-                onSubmit={this.onSubmit}>
+                onSubmit={this.onSubmit}
+            >
                 <input
                     type="text"
                     placeholder="О чем вы думаете сейчас?"
@@ -41,8 +42,10 @@ export default class PostAddForm extends Component {
             
                 <button
                     type="submit"
-                    className="btn btn-outline-secondary">
-                    Добавить пост</button>
+                    className="btn btn-outline-secondary"
+                >
+                    Добавить пост
+                </button>
             </form>
         );
     }

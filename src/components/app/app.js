@@ -20,13 +20,14 @@ const StyledAppBlock = styled(AppBlock)`
 `;
 
 export default class App extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
             data: [
                 {label: 'Going to learn React', important: true, like: false, id: 1},
                 {label: 'That is so good', important: false, like: false, id: 2},
-                {label: 'I need a break...', important: false, like: false, id: 3}
+                {label: 'I need a break...', important: false, like: false, id: 3},
             ],
             term: '',
             filter: 'all'
@@ -53,15 +54,14 @@ export default class App extends Component {
             return {
                 data: newArr
             }
-      
         });
-
     }
 
     addItem(body) {
         const newItem = {
             label: body,
             important: false,
+            like: false,
             id: this.maxId++
         }
         this.setState(({data}) => {
@@ -70,20 +70,19 @@ export default class App extends Component {
                 data: newArr
             }
         });
-        
     }
 
     changePostItemState(id, field) {
         this.setState(({data}) => {
             const index = data.findIndex(elem => elem.id === id);
 
-            const old = data[index];
-            const newItem = {...old, [field]: !old[field]};
+            const oldPost = data[index];
+            const newPost = {...oldPost, [field]: !oldPost[field]};
 
             const before = data.slice(0, index);
             const after = data.slice(index + 1);
 
-            const newArr = [...before, newItem, ...after];
+            const newArr = [...before, newPost, ...after];
             return {
                 data: newArr
             }
@@ -98,20 +97,18 @@ export default class App extends Component {
         this.changePostItemState(id, 'like');
     }
 
-    searchPost(items, term) {
+    searchPost(posts, term) {
         if (term.length === 0) {
-            return items;
+            return posts;
         }
-        return items.filter(item => {
-            return item.label.indexOf(term) > -1;
-        });
+        return posts.filter(post => post.label.indexOf(term) > -1);
     }
 
-    filterPost(items, filter) {
+    filterPost(posts, filter) {
         if (filter === 'like') {
-            return items.filter(item => item.like);
+            return posts.filter(post => post.like === true);
         } else {
-            return items;
+            return posts;
         }
     }
 
@@ -135,7 +132,7 @@ export default class App extends Component {
                 <AppHeader 
                     liked={liked}
                     allPosts={allPosts}
-                    />
+                />
                 <div className="search-panel d-flex">
                     <SearchPanel 
                         onUpdateSearch={this.onUpdateSearch}
@@ -150,9 +147,10 @@ export default class App extends Component {
                     onDelete={this.deleteItem}
                     onToggleImportant={this.onToggleImportant}
                     onToggleLiked={this.onToggleLiked}
-                    />
+                />
                 <PostAddForm
-                    onAdd={this.addItem}/>
+                    onAdd={this.addItem}
+                />
             </StyledAppBlock>
         )
     }
